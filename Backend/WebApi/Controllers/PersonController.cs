@@ -75,7 +75,15 @@ namespace WebApi.Controllers
             return Ok(persons);
         }
 
-        [HttpGet("add-person")]
+        [HttpGet("get-person/{id}")]
+        public async Task<IActionResult> GetPersons(int id)
+        {
+            var persons = await _repository.Person.Find(p => p.Identity == id);
+            return Ok(persons);
+        }
+
+
+        [HttpPost("add-person")]
         public async Task<IActionResult> addPerson(PersonRequest model)
         {
             try
@@ -100,7 +108,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("update-person")]
+        [HttpPut("update-person")]
         public async Task<IActionResult> UpdatePerson(PersonRequest model)
         {
             try
@@ -129,7 +137,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("delete-person")]
+        [HttpDelete("delete-person")]
         public async Task<IActionResult> DeletePerson(PersonRequest model)
         {
             try
