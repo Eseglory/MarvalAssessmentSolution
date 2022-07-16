@@ -11,10 +11,19 @@ Admin login details:
  
  
  .Net framework (.net core 5) | C#
+ 
  BCrypt.Net-Next
+ 
  AutoMapper 
+ 
 Microsoft OpenApi
+
+Identity Tokens (Jwt)
+
 Docker Container | Docker Compose
+
 Entity framework ORM
+
 MSSQL
+
 Onion architecture | Repository Pattern
