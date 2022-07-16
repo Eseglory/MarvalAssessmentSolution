@@ -17,8 +17,6 @@ Admin login details:
  BCrypt.Net-Next
  
  AutoMapper 
- 
-Microsoft OpenApi
 
 Identity Tokens (Jwt)
 
