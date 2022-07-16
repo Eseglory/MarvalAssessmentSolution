@@ -1,37 +1,31 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.FileProviders;
-using System.Linq;
-using Application.Services.Interface;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System;
+using Application.Services.Interface;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Common.Core.Models.Person;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 using Common.Entities;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class PersonController : BaseController
     {
         private IRepositoryWrapper _repository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IAccountService _accountService;
 
 
-        public PersonController(IWebHostEnvironment hostEnvironment, IAccountService accountService, IRepositoryWrapper repository)
+        public PersonController(IWebHostEnvironment hostEnvironment, IRepositoryWrapper repository)
         {
             _webHostEnvironment = hostEnvironment;
             _repository = repository;
-            _accountService = accountService;
         }
 
+        //[Authorize]
         [HttpPost("upload-person-csv-file")]
         public async Task<IActionResult> UploadProfilePicture(IFormFile file)
         {
@@ -68,6 +62,7 @@ namespace WebApi.Controllers
             }
         }
 
+        //[Authorize]
         [HttpGet("get-all-uploaded-records")]
         public async Task<IActionResult> GetAllPersons()
         {
@@ -75,6 +70,7 @@ namespace WebApi.Controllers
             return Ok(persons);
         }
 
+        //[Authorize]
         [HttpGet("get-person/{id}")]
         public async Task<IActionResult> GetPersons(int id)
         {
@@ -82,7 +78,7 @@ namespace WebApi.Controllers
             return Ok(persons);
         }
 
-
+        //[Authorize]
         [HttpPost("add-person")]
         public async Task<IActionResult> addPerson(PersonRequest model)
         {
@@ -108,6 +104,7 @@ namespace WebApi.Controllers
             }
         }
 
+        //[Authorize]
         [HttpPut("update-person")]
         public async Task<IActionResult> UpdatePerson(PersonRequest model)
         {
@@ -137,19 +134,20 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("delete-person")]
-        public async Task<IActionResult> DeletePerson(PersonRequest model)
+        //[Authorize]
+        [HttpDelete("delete-person/{id}")]
+        public async Task<IActionResult> DeletePerson(int id)
         {
             try
             {
-                var person = await _repository.Person.Find(p => p.Identity == model.Identity);
+                var person = await _repository.Person.Find(p => p.Identity == id);
                 if (person != null)
                 {
                     _repository.Person.Delete(person);
                 }
                 else
                 {
-                    return BadRequest($"sorry no record with this identity {model.Identity} exist.");
+                    return BadRequest($"sorry no record with this identity {id} exist.");
                 }
                 await _repository.Save();
                 return Ok("record deleted successfully.");

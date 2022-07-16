@@ -14,7 +14,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace WebApi
 {
@@ -33,17 +32,17 @@ namespace WebApi
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase")));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("EnableCORS", builder =>
-                {
-                    builder
-                        .WithOrigins("http://127.0.0.1:3000", "https://powerfull.app", "http://localhost:3000")
-                        .AllowAnyHeader()
-                        .AllowCredentials()
-                        .AllowAnyMethod();
-                });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("EnableCORS", builder =>
+            //    {
+            //        builder
+            //            .WithOrigins("http://127.0.0.1:3000", "http://localhost:3000")
+            //            .AllowAnyHeader()
+            //            .AllowCredentials()
+            //            .AllowAnyMethod();
+            //    });
+            //});
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(x =>
@@ -102,12 +101,12 @@ namespace WebApi
             app.UseStaticFiles();
 
             // global cors policy
-            app.UseCors("EnableCORS");
-            app.UseCors(x => x
-                .SetIsOriginAllowed(origin => true)
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+            //app.UseCors("EnableCORS");
+            //app.UseCors(x => x
+            //    .SetIsOriginAllowed(origin => true)
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader()
+            //    .AllowCredentials());
 
             // global error handler
             app.UseMiddleware<ErrorHandlerMiddleware>();
