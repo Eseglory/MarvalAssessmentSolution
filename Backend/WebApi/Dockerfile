@@ -8,9 +8,9 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["Backend/WebApi/WebApi.csproj", "Backend/WebApi/"]
 COPY ["Backend/Application/Application.csproj", "Backend/Application/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-COPY ["Common/Common.csproj", "Common/"]
 COPY ["Backend/Common.Core/Common.Core.csproj", "Backend/Common.Core/"]
+COPY ["Backend/Common/Common.csproj", "Backend/Common/"]
+COPY ["Backend/Infrastructure/Infrastructure.csproj", "Backend/Infrastructure/"]
 RUN dotnet restore "Backend/WebApi/WebApi.csproj"
 COPY . .
 WORKDIR "/src/Backend/WebApi"

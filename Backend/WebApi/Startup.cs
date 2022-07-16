@@ -1,5 +1,6 @@
 using Application.Middleware;
 using Application.Service;
+using Application.Services;
 using Application.Services.Interface;
 using Common.Core.Helpers;
 using Infrastructure.Persistence;
@@ -83,6 +84,7 @@ namespace WebApi
 
             // configure DI for application services
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
 
         // configure the HTTP request pipeline

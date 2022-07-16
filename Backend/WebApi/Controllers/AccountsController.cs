@@ -34,6 +34,9 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        // The logic for registration, forget password, verify token e.t.c is already available in _accountService
+        // all you need do is to call them if need be.
+
         private void setTokenCookie(string token)
         {
             var cookieOptions = new CookieOptions
