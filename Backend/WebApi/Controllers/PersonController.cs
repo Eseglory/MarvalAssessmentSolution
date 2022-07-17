@@ -8,8 +8,9 @@ using Common.Core.Models.Person;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Common.Entities;
+using Microsoft.Extensions.Logging;
 
-namespace WebApi.Controllers
+namespace MarvalWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -17,15 +18,16 @@ namespace WebApi.Controllers
     {
         private IRepositoryWrapper _repository;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ILogger<PersonController> _logger;
 
-
-        public PersonController(IWebHostEnvironment hostEnvironment, IRepositoryWrapper repository)
+        public PersonController(IWebHostEnvironment hostEnvironment, ILogger<PersonController> logger, IRepositoryWrapper repository)
         {
             _webHostEnvironment = hostEnvironment;
             _repository = repository;
+            _logger = logger;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("upload-person-csv-file")]
         public async Task<IActionResult> UploadProfilePicture(IFormFile file)
         {
@@ -62,25 +64,41 @@ namespace WebApi.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("get-all-uploaded-records")]
         public async Task<IActionResult> GetAllPersons()
         {
-            var persons = await _repository.Person.FindAll().ToListAsync();
-            return Ok(persons);
+            try
+            {
+                var persons = await _repository.Person.FindAll().ToListAsync();
+                return Ok(persons);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get Persons Exception: {e.Message}");
+                return BadRequest("Oops, sorry something went wrong, pleace check error logs.");
+            }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("get-person/{id}")]
         public async Task<IActionResult> GetPersons(int id)
         {
-            var persons = await _repository.Person.Find(p => p.Identity == id);
-            return Ok(persons);
+            try
+            {
+                var persons = await _repository.Person.Find(p => p.Identity == id);
+                return Ok(persons);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get Person Exception: {e.Message}");
+                return BadRequest("Oops, sorry something went wrong, pleace check error logs.");
+            }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("add-person")]
-        public async Task<IActionResult> addPerson(PersonRequest model)
+        public async Task<IActionResult> AddPerson(PersonRequest model)
         {
             try
             {
@@ -100,11 +118,12 @@ namespace WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError($"Add Person Exception: {e.Message}");
                 return BadRequest("Oops, sorry something went wrong, pleace check error logs.");
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("update-person")]
         public async Task<IActionResult> UpdatePerson(PersonRequest model)
         {
@@ -130,11 +149,12 @@ namespace WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError($"Update Person Exception: {e.Message}");
                 return BadRequest("Oops, sorry something went wrong, pleace check error logs.");
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("delete-person/{id}")]
         public async Task<IActionResult> DeletePerson(int id)
         {
@@ -154,6 +174,7 @@ namespace WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError($"Delete Person Exception: {e.Message}");
                 return BadRequest("Oops, sorry something went wrong, pleace check error logs.");
             }
         }

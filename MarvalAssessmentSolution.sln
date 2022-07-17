@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Backend\Appl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{8C329748-788B-4BAB-88EB-EEF9141AEAA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "Backend\WebApi\WebApi.csproj", "{0A36E964-474A-48FF-B43A-DFA7CA763BA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarvalWebApi", "Backend\WebApi\MarvalWebApi.csproj", "{0A36E964-474A-48FF-B43A-DFA7CA763BA4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Backend\Common\Common.csproj", "{C5F988A3-4AE1-47C3-815F-516185CB53CB}"
 EndProject

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-namespace WebApi.Controllers
+namespace MarvalWebApi.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     public class DefaultController : Controller

@@ -7,9 +7,8 @@ namespace Common.Entities
 {
     public class Person
     {
-        // use long instead of int to handle millions of users
         [Key]
-        public long Identity { get; set; }
+        public int Identity { get; set; }
 
         [Required]
         public string FirstName { get; set; }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace WebApi.Controllers
+namespace MarvalWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -29,8 +29,6 @@ namespace WebApi.Controllers
         {
             var response = await _accountService.Authenticate(model, ipAddress());
             setTokenCookie(response.RefreshToken);
-            var baseUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
-
             return Ok(response);
         }
 

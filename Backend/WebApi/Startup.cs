@@ -15,7 +15,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 
-namespace WebApi
+namespace MarvalWebApi
 {
     public class Startup
     {
@@ -30,7 +30,7 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase")));
+            options.UseSqlServer(Configuration.GetConnectionString("MarvalWebApiDatabase")));
 
             services.AddCors(options =>
             {

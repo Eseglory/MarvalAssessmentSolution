@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers
+namespace MarvalWebApi.Controllers
 {
     [Controller]
     public abstract class BaseController : ControllerBase
