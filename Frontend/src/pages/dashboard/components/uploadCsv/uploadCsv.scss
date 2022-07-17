@@ -19,4 +19,9 @@
   .uploadCsv__input {
     margin-bottom: 15px;
   }
+
+  .uploadCsv__err {
+    color: $danger;
+    margin-bottom: 10px;
+  }
 }

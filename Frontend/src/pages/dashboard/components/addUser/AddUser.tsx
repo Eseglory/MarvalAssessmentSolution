@@ -35,14 +35,19 @@ const schema: Schema = {
     type: "string",
     required: true,
   },
+  active: {
+    type: "string",
+    required: true,
+  },
 };
 
 interface Props {
   handleAddUser: (values: PersonI) => Promise<void>;
   isAddUserLoading: boolean;
+  err: string;
 }
 
-const AddUser: React.FC<Props> = ({ handleAddUser, isAddUserLoading }) => {
+const AddUser: React.FC<Props> = ({ handleAddUser, isAddUserLoading, err }) => {
   const { inputs, errors, handleChange, handleSubmit } = useForm(initialState, {
     submitFunc: handleAddUser,
     schema,
@@ -84,16 +89,30 @@ const AddUser: React.FC<Props> = ({ handleAddUser, isAddUserLoading }) => {
       />
       <FormFieldRadio
         data={[
-          { name: "Male", value: "0" },
-          { name: "Female", value: "1" },
+          { name: "Male", value: "M" },
+          { name: "Female", value: "F" },
         ]}
         name="sex"
         optionLabel="name"
-        optionValue="name"
+        optionValue="value"
         state={inputs.sex}
         error={errors.sex}
         onChange={handleChange}
       />
+      <FormFieldRadio
+        data={[
+          { name: "TRUE", value: "TRUE" },
+          { name: "FALSE", value: "FALSE" },
+        ]}
+        name="active"
+        optionLabel="name"
+        optionValue="value"
+        state={inputs.active}
+        error={errors.active}
+        onChange={handleChange}
+      />
+      {err && <div className="addUser__err">{err}</div>}
+
       <div className="addUser__btnDiv">
         <Button loading={isAddUserLoading} type="submit" fullWidth>
           Add User

@@ -33,6 +33,8 @@ const Login = () => {
     }
   );
 
+  const [err, setErr] = useState("");
+
   const [loading, setLoading] = useState(false);
   const { setIsAuthenticated, setUser } = useAuth();
 
@@ -40,6 +42,8 @@ const Login = () => {
 
   async function onSubmit(values: LoginData) {
     setLoading(true);
+
+    setErr("");
 
     try {
       const res = await login(values);
@@ -57,7 +61,8 @@ const Login = () => {
         navigate(Path.Dashboard);
       }
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
+      setErr(error?.response?.data?.message);
       setLoading(false);
     }
   }
@@ -82,6 +87,7 @@ const Login = () => {
           error={errors.password}
           onChange={handleChange}
         />
+        {err && <div className="login__err">{err}</div>}
         <div className="login__btnDiv">
           <Button loading={loading} fullWidth>
             Login

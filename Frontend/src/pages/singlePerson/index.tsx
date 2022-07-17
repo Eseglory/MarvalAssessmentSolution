@@ -10,8 +10,9 @@ const SinglePerson = () => {
   const params = useParams();
 
   const { handleLogout } = useAuth();
-  const { data, isLoading } = useGetSinglePerson(params?.id || "");
+  const { data, isLoading, error } = useGetSinglePerson(params?.id || "");
 
+  console.log(error);
   return (
     <div className="singlePerson">
       <div className="singlePerson__container">
@@ -26,6 +27,13 @@ const SinglePerson = () => {
             Go Back
           </Button>
         </div>
+        {error ? (
+          <div className="singlePerson__err">
+            {(error as any)?.response?.data?.title}
+          </div>
+        ) : (
+          ""
+        )}
         {isLoading && <div className="singlePerson__loading">Loading...</div>}
         {data && (
           <div className="singlePerson__data">

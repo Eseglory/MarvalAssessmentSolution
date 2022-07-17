@@ -14,4 +14,9 @@
     text-align: center;
     font-size: 24px;
   }
+
+  .updateUser__err {
+    color: $danger;
+    margin-bottom: 10px;
+  }
 }

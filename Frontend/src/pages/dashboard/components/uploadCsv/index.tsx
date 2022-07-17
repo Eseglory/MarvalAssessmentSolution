@@ -1,7 +1,7 @@
 import { Button } from "components";
 import { useAuth } from "contexts/AuthContext";
 import { useForm } from "hooks/utils/useForm";
-import React from "react";
+import React, { useState } from "react";
 import { uploadCsv } from "services/person";
 import "./uploadCsv.scss";
 
@@ -28,6 +28,7 @@ const UploadCsv: React.FC<Props> = ({
 }) => {
   const { inputs, handleChange } = useForm<InitialStateI>(initialState);
   const { user } = useAuth();
+  const [errs, setErrs] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,8 +46,10 @@ const UploadCsv: React.FC<Props> = ({
         setShowAlert(true);
       }
       setIsUploadCsvLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsUploadCsvLoading(false);
+
+      setErrs(error?.response?.data);
     }
   };
 
@@ -62,6 +65,7 @@ const UploadCsv: React.FC<Props> = ({
         onChange={handleChange}
         id=""
       />
+      {errs && <div className="uploadCsv__err">{errs}</div>}
       <div className="uploadCsv__btnDiv">
         <Button
           loading={isUploadCsvLoading}

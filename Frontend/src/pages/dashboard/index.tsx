@@ -23,6 +23,7 @@ const Dashboard = () => {
   const [isUploadCsvLoading, setIsUploadCsvLoading] = useState(false);
   const [shouldUpdateUser, setShouldUpdateUser] = useState<boolean>(true);
   const [showAlert, setShowAlert] = useState(false);
+  const [err, setErr] = useState("");
 
   const navigate = useNavigate();
 
@@ -86,9 +87,11 @@ const Dashboard = () => {
         setShouldUpdateUser(true);
       }
       setIsAddUserLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsAddUserLoading(false);
       setShouldUpdateUser(true);
+
+      setErr(error?.response?.data);
     }
   };
 
@@ -104,9 +107,10 @@ const Dashboard = () => {
         setShouldUpdateUser(true);
       }
       setIsUpdateUserLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsUpdateUserLoading(false);
       setShouldUpdateUser(true);
+      setErr(error?.response?.data);
     }
   };
 
@@ -122,9 +126,10 @@ const Dashboard = () => {
         setShouldUpdateUser(true);
       }
       setIsDeleteUserLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsDeleteUserLoading(false);
       setShouldUpdateUser(true);
+      setErr(error?.response?.data);
     }
   };
 
@@ -195,6 +200,7 @@ const Dashboard = () => {
         <AddUser
           isAddUserLoading={isAddUserLoading}
           handleAddUser={handleAddUser}
+          err={err}
         />
       </Modal>
       <Modal isOpen={isUpdateUserModal} handleClose={handleUpdateUserClose}>
@@ -202,6 +208,7 @@ const Dashboard = () => {
           isUpdateUserLoading={isUpdateUserLoading}
           selectedUser={selectedUser}
           handleUpdateUser={handleUpdateUser}
+          err={err}
         />
       </Modal>
       <Modal isOpen={isDeleteUserModal} handleClose={handleDeleteUserClose}>
@@ -210,6 +217,7 @@ const Dashboard = () => {
           handleDeleteUserClose={handleDeleteUserClose}
           selectedUser={selectedUser}
           isDeleteUserLoading={isDeleteUserLoading}
+          err={err}
         />
       </Modal>
       <Modal isOpen={isUploadCsvModal} handleClose={handleUploadCsvClose}>

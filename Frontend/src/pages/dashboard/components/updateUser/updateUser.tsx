@@ -39,12 +39,14 @@ interface Props {
   handleUpdateUser: (values: PersonI) => Promise<void>;
   selectedUser: PersonI | undefined;
   isUpdateUserLoading: boolean;
+  err: string;
 }
 
 const UpdateUser: React.FC<Props> = ({
   handleUpdateUser,
   selectedUser,
   isUpdateUserLoading,
+  err,
 }) => {
   const [initialState, setInitialState] = useState<PersonI>({
     firstName: "",
@@ -103,19 +105,33 @@ const UpdateUser: React.FC<Props> = ({
       />
       <FormFieldRadio
         data={[
-          { name: "Male", value: "0" },
-          { name: "Female", value: "1" },
+          { name: "Male", value: "M" },
+          { name: "Female", value: "F" },
         ]}
         name="sex"
         optionLabel="name"
-        optionValue="name"
+        optionValue="value"
         state={inputs.sex}
         error={errors.sex}
         onChange={handleChange}
       />
+       <FormFieldRadio
+        data={[
+          { name: "TRUE", value: "TRUE" },
+          { name: "FALSE", value: "FALSE" },
+        ]}
+        name="active"
+        optionLabel="name"
+        optionValue="value"
+        state={inputs.active}
+        error={errors.active}
+        onChange={handleChange}
+      />
+      {err && <div className="updateUser__err">{err}</div>}
+
       <div className="updateUser__btnDiv">
         <Button loading={isUpdateUserLoading} type="submit" fullWidth>
-          Add User
+          Update User
         </Button>
       </div>
     </form>

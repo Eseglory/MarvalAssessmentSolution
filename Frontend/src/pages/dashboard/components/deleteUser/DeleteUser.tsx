@@ -8,6 +8,7 @@ interface Props {
   handleDeleteUser: (id: string) => Promise<void>;
   selectedUser: PersonI | undefined;
   handleDeleteUserClose: () => void;
+  err: string;
 }
 
 const DeleteUser: React.FC<Props> = ({
@@ -15,11 +16,13 @@ const DeleteUser: React.FC<Props> = ({
   handleDeleteUser,
   selectedUser,
   handleDeleteUserClose,
+  err,
 }) => {
   return (
     <div className="deleteUser">
       <h3 className="deleteUser__header">Delete User</h3>
 
+      {err && <div className="deleteUser__err">{err}</div>}
       <div className="deleteUser__btnDiv">
         <Button
           className="deleteUser__btn"
