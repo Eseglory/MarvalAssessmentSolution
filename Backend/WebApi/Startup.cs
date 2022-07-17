@@ -37,7 +37,7 @@ namespace MarvalWebApi
                 options.AddPolicy("EnableCORS", builder =>
                 {
                     builder
-                        .WithOrigins("http://127.0.0.1:3000", "http://localhost:3000")
+                        .WithOrigins("http://127.0.0.1:3000", "http://eglory-001-site1.itempurl.com", "http://localhost:3000")
                         .AllowAnyHeader()
                         .AllowCredentials()
                         .AllowAnyMethod();
