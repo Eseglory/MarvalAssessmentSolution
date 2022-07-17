@@ -8,7 +8,7 @@ namespace Common.Entities
     public class Person
     {
         [Key]
-        public int Identity { get; set; }
+        public long Identity { get; set; }
 
         [Required]
         public string FirstName { get; set; }
