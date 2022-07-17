@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220717154101_modifypersonSurname")]
+    partial class modifypersonSurname
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,16 +78,16 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            DateCreated = new DateTime(2022, 7, 17, 17, 17, 23, 244, DateTimeKind.Local).AddTicks(14),
+                            DateCreated = new DateTime(2022, 7, 17, 16, 41, 1, 43, DateTimeKind.Local).AddTicks(8598),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "engreseglory@gmail.com",
                             FirstName = "Glory",
                             LastName = "Efionayi",
-                            PasswordHash = "$2a$11$wXvTM6Z0usP7NSzNrHYZsOSwLuw9san.hbn9pED/82RpzgKylcNWq",
+                            PasswordHash = "$2a$11$SolhwFbAHYcJabwMa8DhWePc95MrGvmPYK2hOpYggPc85iTMQ4AD2",
                             PhoneNumber = "08034441916",
                             Role = 0,
                             TokenDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Verified = new DateTime(2022, 7, 17, 17, 17, 23, 241, DateTimeKind.Local).AddTicks(6102)
+                            Verified = new DateTime(2022, 7, 17, 16, 41, 1, 42, DateTimeKind.Local).AddTicks(1658)
                         });
                 });
 

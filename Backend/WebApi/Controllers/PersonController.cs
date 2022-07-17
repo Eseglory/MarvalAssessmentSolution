@@ -10,6 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using Common.Entities;
 using Microsoft.Extensions.Logging;
 using Common.Core.Helpers;
+using System.Collections.Generic;
+using OfficeOpenXml;
+using System.Linq;
+using CsvHelper;
+using System.Globalization;
 
 namespace MarvalWebApi.Controllers
 {
@@ -28,41 +33,75 @@ namespace MarvalWebApi.Controllers
             _logger = logger;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("upload-person-csv-file")]
-        public async Task<IActionResult> UploadProfilePicture(IFormFile file)
+        public async Task<IActionResult> UploadCscFile(IFormFile file)
         {
             try
             {
-                string uniqueFileName = null;
-                string iPhotoUrl = null;
-                //file should not be more than 5 mb you can increase the mb if you want
-                if (file.Length > 500000)
+                List<Person> persons = new List<Person>();
+                var fileextension = Path.GetExtension(file.FileName);
+                var filename = Guid.NewGuid().ToString() + fileextension;
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "csvfiles", filename);
+                using (FileStream fs = System.IO.File.Create(filepath))
                 {
-                    return BadRequest(new { message = "your image can not be more than 150 kilobytes" });
+                    file.CopyTo(fs);
                 }
-                if (file.FileName != null)
+                if (fileextension == ".csv")
                 {
-                    //store the original copy of the csv file
-                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "csvfiles");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                    uniqueFileName = uniqueFileName.Replace("-", "");
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    using (var reader = new StreamReader(filepath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
-                        file.CopyTo(fileStream);
+                        //Map the csv content to Person object
+                        //were are not allowed to modify the headers of the csv file Person object is
+                        //to maintain that naming for proper data mapping
+
+                        var records = csv.GetRecords<Person>();
+                        foreach (var record in records)
+                        {
+                            //Validate record 
+                           var validationResult = CustomValidator.ValidatePerson(new PersonRequest()
+                           {
+                               Active = record.Active,
+                               Age = record.Age,
+                               Sex = record.Sex,
+                               Surname = record.Surname,
+                               FirstName = record.FirstName,
+                               Mobile = record.Mobile
+                           });
+                            if(!validationResult.isvalid)
+                            {
+                                return BadRequest(validationResult.message);
+                            }
+
+                            Person person = new Person()
+                            {
+                                Active = record.Active.ToUpper(),
+                                Age = record.Age,
+                                Sex = record.Sex.ToUpper(),
+                                Surname = record.Surname,
+                                FirstName = record.FirstName,
+                                Mobile = record.Mobile
+                            };
+                            persons.Add(person);
+                        }
                     }
+
+                }
+                else
+                {
+                    return BadRequest($"sorry the system does not support this file type {fileextension}");
                 }
 
+                await _repository.Person.AddList(persons);
                 await _repository.Save();
-                return Ok($"csv file: {file.FileName} records was uploaded successfully.");
-
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(new { message = "Uploading file content failed" + ex.Message });
+                _logger.LogError($"Batch Person Upload Exception: {e.Message}");
+                return BadRequest("sorry something went wrong, invalid data entry please cross check your file");
             }
+            return Ok($"csv file: {file.FileName} was uploaded successfully.");
         }
 
         [Authorize]
@@ -103,14 +142,11 @@ namespace MarvalWebApi.Controllers
         {
             try
             {
-                //Validate inputs
-                if(!CustomValidator.IsPhoneNumberValid(model.Mobile))
+                //Validate record 
+                var validationResult = CustomValidator.ValidatePerson(model);
+                if (!validationResult.isvalid)
                 {
-                    return BadRequest($"sorry mobile number {model.Mobile} is not valid.");
-                }
-                else if(model.Active.ToLower() != "true" || model.Active.ToLower() != "false")
-                {
-                    return BadRequest($"sorry {model.Active} is not valid, you can only enter true or false.");
+                    return BadRequest(validationResult.message);
                 }
 
                 var person = new Person()
@@ -119,7 +155,7 @@ namespace MarvalWebApi.Controllers
                     FirstName = model.FirstName,
                     Surname = model.Surname,
                     Age = model.Age,
-                    Sex = model.Sex,
+                    Sex = model.Sex.ToUpper(),
                     Mobile = model.Mobile
                 };
 
@@ -140,24 +176,21 @@ namespace MarvalWebApi.Controllers
         {
             try
             {
-                //Validate inputs
-                if (!CustomValidator.IsPhoneNumberValid(model.Mobile))
+                //Validate record 
+                var validationResult = CustomValidator.ValidatePerson(model);
+                if (!validationResult.isvalid)
                 {
-                    return BadRequest($"sorry mobile number {model.Mobile} is not valid.");
-                }
-                else if (model.Active.ToLower() != "true" || model.Active.ToLower() != "false")
-                {
-                    return BadRequest($"sorry {model.Active} is not valid, you can only enter true or false.");
+                    return BadRequest(validationResult.message);
                 }
 
                 var person = await _repository.Person.Find(p => p.Identity == model.Identity);
                 if (person != null)
                 {
-                    person.Active = model.Active;
+                    person.Active = model.Active.ToUpper();
                     person.FirstName = model.FirstName;
                     person.Surname = model.Surname;
                     person.Age = model.Age;
-                    person.Sex = model.Sex;
+                    person.Sex = model.Sex.ToUpper();
                     person.Mobile = model.Mobile;
                     _repository.Person.Update(person);
                 }
@@ -200,4 +233,7 @@ namespace MarvalWebApi.Controllers
             }
         }
     }
+
 }
+
+

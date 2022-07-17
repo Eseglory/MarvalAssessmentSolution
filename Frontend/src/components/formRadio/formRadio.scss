@@ -1,0 +1,48 @@
+@use "styles" as *;
+
+.formRadio {
+  margin-bottom: 15px;
+
+  .formRadio__radio {
+    display: flex;
+    align-items: center;
+  }
+
+  .formRadio__input {
+    appearance: none;
+    width: 17px;
+    height: 17px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+
+    &:before {
+      width: 80%;
+      height: 80%;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+      border-radius: 50%;
+      transform: translate(-46%, -53%);
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    &:checked {
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+
+  .formRadio__label {
+    cursor: pointer;
+  }
+
+  .formRadio__error {
+    color: $danger;
+  }
+}

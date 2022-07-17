@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Application.Services
 {
@@ -24,6 +25,8 @@ namespace Application.Services
          RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
 
         public async Task Create(T entity) => await RepositoryContext.Set<T>().AddAsync(entity);
+
+        public async Task AddList(List<T> entities) => await RepositoryContext.Set<T>().AddRangeAsync(entities);
 
         public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
 

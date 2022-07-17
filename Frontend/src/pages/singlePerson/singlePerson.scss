@@ -1,0 +1,45 @@
+@use "styles" as *;
+
+.singlePerson {
+  min-height: 100vh;
+  background-color: $primary;
+  padding: 30px 0;
+
+  .singlePerson__container {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .singlePerson__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .singlePerson__header {
+    color: $white;
+    font-weight: 500;
+  }
+
+  .singlePerson__loading {
+    margin: 40px 0;
+    color: $white;
+  }
+
+  .singlePerson__data {
+    margin: 40px 0;
+  }
+
+  .singlePerson__row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: $white;
+  }
+
+  .singlePerson__key {
+    font-weight: 600;
+    margin-right: 10px;
+  }
+}

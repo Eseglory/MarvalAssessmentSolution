@@ -1,4 +1,8 @@
 # MarvalAssessmentSolution
+
+FRONTEND TECHNOLOGIES INCLUDE
+React Javascript and type script
+
 BACKEND API:
 
 hosted here: http://137.184.186.20:8002 (hosted on a docker container)

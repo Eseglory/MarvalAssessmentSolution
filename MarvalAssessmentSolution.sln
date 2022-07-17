@@ -25,6 +25,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Backend\I
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{86C01BEA-656E-4B6B-9F96-1F59DD54F3E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{17000478-251D-490C-BE72-6B40215E4E3B}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Frontend", "Frontend\", "{699F51B5-2921-4B0D-8721-7479075B1816}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_2286"
+		Debug.AspNetCompiler.PhysicalPath = "Frontend\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_2286\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_2286"
+		Release.AspNetCompiler.PhysicalPath = "Frontend\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_2286\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "2286"
+		SlnRelativePath = "Frontend\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +78,10 @@ Global
 		{86C01BEA-656E-4B6B-9F96-1F59DD54F3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86C01BEA-656E-4B6B-9F96-1F59DD54F3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86C01BEA-656E-4B6B-9F96-1F59DD54F3E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{699F51B5-2921-4B0D-8721-7479075B1816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{699F51B5-2921-4B0D-8721-7479075B1816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{699F51B5-2921-4B0D-8721-7479075B1816}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{699F51B5-2921-4B0D-8721-7479075B1816}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +96,7 @@ Global
 		{0A36E964-474A-48FF-B43A-DFA7CA763BA4} = {8C329748-788B-4BAB-88EB-EEF9141AEAA7}
 		{C5F988A3-4AE1-47C3-815F-516185CB53CB} = {780F2F87-9C99-409C-BF44-4C11F88A586E}
 		{4CBF41CC-CEA9-4B78-B332-610AC988D1FC} = {8A5E3C18-8618-467E-90AF-34FED769E54A}
+		{699F51B5-2921-4B0D-8721-7479075B1816} = {17000478-251D-490C-BE72-6B40215E4E3B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40622926-2034-41D8-9C8B-A3F6442B19EE}

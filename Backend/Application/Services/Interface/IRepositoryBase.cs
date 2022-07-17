@@ -13,6 +13,7 @@ namespace Application.Services
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
         Task<T> Find(Expression<Func<T, bool>> expression);
         Task Create(T entity);
+        Task AddList(List<T> entities);
         void Update(T entity);
         void Delete(T entity);
     }
