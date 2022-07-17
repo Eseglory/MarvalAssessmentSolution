@@ -9,6 +9,7 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Common.Entities;
 using Microsoft.Extensions.Logging;
+using Common.Core.Helpers;
 
 namespace MarvalWebApi.Controllers
 {
@@ -55,7 +56,7 @@ namespace MarvalWebApi.Controllers
                 }
 
                 await _repository.Save();
-                return Ok(new { UserImageUrl = iPhotoUrl });
+                return Ok($"csv file: {file.FileName} records was uploaded successfully.");
 
             }
             catch (Exception ex)
@@ -102,9 +103,19 @@ namespace MarvalWebApi.Controllers
         {
             try
             {
+                //Validate inputs
+                if(!CustomValidator.IsPhoneNumberValid(model.Mobile))
+                {
+                    return BadRequest($"sorry mobile number {model.Mobile} is not valid.");
+                }
+                else if(model.Active.ToLower() != "true" || model.Active.ToLower() != "false")
+                {
+                    return BadRequest($"sorry {model.Active} is not valid, you can only enter true or false.");
+                }
+
                 var person = new Person()
                 {
-                    Active = model.Active,
+                    Active = model.Active.ToUpper(),
                     FirstName = model.FirstName,
                     Surname = model.Surname,
                     Age = model.Age,
@@ -119,7 +130,7 @@ namespace MarvalWebApi.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"Add Person Exception: {e.Message}");
-                return BadRequest("Oops, sorry something went wrong, pleace check error logs.");
+                return BadRequest("Oops, sorry something went wrong, pleace cross check your entry.");
             }
         }
 
@@ -129,6 +140,16 @@ namespace MarvalWebApi.Controllers
         {
             try
             {
+                //Validate inputs
+                if (!CustomValidator.IsPhoneNumberValid(model.Mobile))
+                {
+                    return BadRequest($"sorry mobile number {model.Mobile} is not valid.");
+                }
+                else if (model.Active.ToLower() != "true" || model.Active.ToLower() != "false")
+                {
+                    return BadRequest($"sorry {model.Active} is not valid, you can only enter true or false.");
+                }
+
                 var person = await _repository.Person.Find(p => p.Identity == model.Identity);
                 if (person != null)
                 {
